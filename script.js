@@ -1,90 +1,86 @@
-var saveButton = $('.saveButton')
-var time8 =$('#time8')
-var time9 =$('#time9')
-var time10 =$('#time10')
-var time11 =$('#time11')
-var time12 =$('#time12')
-var time1 =$('#time13')
-var time2 =$('#time14')
-var time3 =$('#time15')
-var time4 =$('#time16')
-var time5 =$('#time17')
-var time6 =$('#time18')
-var inputField = $(".inputField")
+var saveBtn = $('.saveBtn');
+var eightId = $('#hour8');
+var nineId = $('#hour9');
+var tenId = $('#hour10');
+var elevenId = $('#hour11');
+var twelveId = $('#hour12');
+var oneId = $('#hour13');
+var twoId = $('#hour14');
+var threeId = $('#hour15');
+var fourId = $('#hour16');
+var fiveId = $('#hour17');
+var sixId = $('#hour18');
+var textarea = $(".form-control");
 
-var hour8 =$('#hour8')
-var hour9 =$('#hour9')
-var hour10 =$('#hour10')
-var hour11 =$('#hour11')
-var hour12 =$('#hour12')
-var hour1 =$('#hour13')
-var hour2 =$('#hour14')
-var hour3 =$('#hour15')
-var hour4 =$('#hour16')
-var hour5 =$('#hour17')
-var hour6 =$('#hour18')
+var eight = $('#hr8');
+var nine = $('#hr9');
+var ten = $('#hr10');
+var eleven = $('#hr11');
+var twelve = $('#hr12');
+var one = $('#hr13');
+var two = $('#hr14');
+var three = $('#hr15');
+var four = $('#hr16');
+var five = $('#hr17');
+var six = $('#hr18');
 
-var timeSlots = [hour8, hour9, hour10, hour11, hour12, hour1, hour2, hour3, hour4, hour5, hour6]
+var timeArray = [eight, nine, ten, eleven, twelve, one, two, three, four, five, six];
 
-var task;
-var timePeriod;
-var currentHour = moment().hour()
+var text;
+var hourSpan;
+var currentHour = moment().hour();
 
-var todayDate = $('#todayDate')
+var currentDay = $('#currentDay');
 
-function showCurrentDate () {
-    var timeInterval = setInterval(function () {
-        var currentDate = moment().format('dddd, MMMM Do, YYYY [at] hh:mm:ss A')
-        todayDate.text(currentDate)
-    })
-} 
-
-showCurrentDate()
-
-function timeSlotColors() {
-    for (let i=0; i < timeSlots.length; i++) {
-        if (currentHour > timeSlots[i].attr("data-time")){
-            timeSlots[i].attr("class", "past inputField col-10 text");
-        } else if (currentHour == timeSlots[i].attr("data-time")) {
-            timeSlots[i].attr("class", "present inputField col-10 text");
-        } else {
-            timeSlots[i].attr("class", "future inputField col-10 text");
-        }
-    }
-}
-      
-function saveTask (event){
-    event.preventDefault()
-    {
-        var task = $(this).siblings(".text").val()
-        var time = $(this).parent().attr("id");
-        console.log(task)
-        console.log(time)
-        localStorage.setItem(time, task)
-    }
+function displayCurrentDay() {
+  var timeInterval = setInterval(function () {
+    var now = moment().format('dddd, MMMM Do, YYYY[at] hh:mm:ss A');
+    currentDay.text(now);
+  });
 }
 
-saveButton.on('click', saveTask)
-    
-function refresh () {
-    console.log("Current Hour " + currentHour);
-    $("#time9 .text").val(localStorage.getItem("time9"));
-    $("#time10 .text").val(localStorage.getItem("time10"));
-    $("#time11 .text").val(localStorage.getItem("time11"));
-    $("#time12 .text").val(localStorage.getItem("time12"));
-    $("#time13 .text").val(localStorage.getItem("time13"));
-    $("#time14 .text").val(localStorage.getItem("time14"));
-    $("#time15 .text").val(localStorage.getItem("time15"));
-    $("#time16 .text").val(localStorage.getItem("time16"));
-    $("#time17 .text").val(localStorage.getItem("time17"));
-} 
+displayCurrentDay();
 
-$(document).ready (function (){
-    refresh()
-    timeSlotColors()
-})
+function colors() {
+  for (let i = 0; i < timeArray.length; i++) {
+    if (currentHour > timeArray[i].attr("data-time")) {
+      timeArray[i].attr("class", "past form-control col-10 text");
+    } else if (currentHour == timeArray[i].attr("data-time")) {
+      timeArray[i].attr("class", "present form-control col-10 text");
+    } else {
+      timeArray[i].attr("class", "future form-control col-10 text");
+    }
+  }
+}
 
-$("#clearTasks").on("click", function(){
-    localStorage.clear();
-    refresh()
-}) 
+function saveText(event) {
+  event.preventDefault();
+  var text = $(this).siblings(".text").val();
+  var time = $(this).parent().attr("id");
+  localStorage.setItem(time, text);
+}
+
+saveBtn.on('click', saveText);
+
+function refresh() {
+  console.log("Current Hour " + currentHour);
+  $("#hour9 .text").val(localStorage.getItem("hour9"));
+  $("#hour10 .text").val(localStorage.getItem("hour10"));
+  $("#hour11 .text").val(localStorage.getItem("hour11"));
+  $("#hour12 .text").val(localStorage.getItem("hour12"));
+  $("#hour13 .text").val(localStorage.getItem("hour13"));
+  $("#hour14 .text").val(localStorage.getItem("hour14"));
+  $("#hour15 .text").val(localStorage.getItem("hour15"));
+  $("#hour16 .text").val(localStorage.getItem("hour16"));
+  $("#hour17 .text").val(localStorage.getItem("hour17"));
+}
+
+$(document).ready(function () {
+  refresh();
+  colors();
+});
+
+$("#clearDay").on("click", function () {
+  localStorage.clear();
+  refresh();
+});
